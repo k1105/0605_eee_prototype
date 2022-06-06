@@ -4,11 +4,10 @@ function setup() {
   //背景色
   //オブジェクトの色
   noFill();
-  stroke(240, 152, 6);
   strokeWeight(10);
   //キャンバスの中心に直径100pxの丸を描画
   //ellipse(width / 2, height / 2, 100);
-  for (let theta = 0; theta < 2 * Math.PI; theta += Math.PI / 4) {
+  for (let theta = 0; theta < 2 * Math.PI; theta += (2 * Math.PI) / num) {
     points.push(new Point(100 * random(0.5, 2), theta));
   }
 }
@@ -20,26 +19,35 @@ const points = [];
 const begin = 100;
 const end = 500;
 let i = begin;
+let hoge = 0;
 const time = 10;
+const num = 8;
 
 function draw() {
   if (i < end) {
     // この計算の場合、処理が完了するのは: delta / (delta/100) = 100flames.
     i += (end - begin) / time;
-    console.log(i);
+    //console.log(i);
   }
 
   background(255);
 
   push();
-  translate(width / 2, height / 2);
+  stroke(240, 240, 255);
+  translate(
+    width / 2 + 400 * noise(hoge / 1000) - 200,
+    height / 2 + 400 * noise((hoge + 50) / 1000) - 200
+  );
   for (let n = 0; n < points.length; n++) {
     point(points[n].x, points[n].y);
   }
 
+  stroke(240, 152, 6);
+  //stroke(230, 230, 255);
+
   convex_indices = giftwrap(points);
   // draw convex envelope
-  console.log(convex_indices);
+  //console.log(convex_indices);
   let length = 0;
   for (let m = 0; m < convex_indices.length; m++) {
     length += sqrt(
@@ -66,6 +74,10 @@ function draw() {
   text("envelope length: " + length, 10, 30);
   pop();
 
+  for (let i = 0; i < num; i++) {
+    points[i].setRadius(300 * noise((hoge + 100 * i) / 1000));
+  }
+  hoge++;
   //points[5].setRadius(i);
   //points[3].setRadius(i);
 }
@@ -119,7 +131,7 @@ const giftwrap = (points) => {
           points[i].y - points[index].y,
           points[i].x - points[index].x
         );
-        console.log("delta: " + delta);
+        //console.log("delta: " + delta);
         if (prev_min_delta < delta && delta < min_delta) {
           if (i == convex_indices[0] || !convex_indices.includes(i)) {
             min_delta = delta;
@@ -131,7 +143,7 @@ const giftwrap = (points) => {
 
     prev_min_delta = min_delta;
     index = tmp;
-    console.log("min_delta: " + min_delta);
+    //console.log("min_delta: " + min_delta);
     if (index == convex_indices[0]) break;
     convex_indices.push(index);
   }
