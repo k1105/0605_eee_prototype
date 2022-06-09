@@ -11,21 +11,16 @@ function CalcAngle(pos_prev, pos_current, num) {
     const prev_y = pos_prev.coords.latitude;
     const current_x = pos_current.coords.longitude;
     const current_y = pos_current.coords.latitude;
-    console.log(
-      90 -
-        Math.atan2(
-          Math.sin(current_x - prev_x),
-          Math.cos(prev_y) * Math.tan(current_y) -
-            Math.sin(prev_y) * Math.cos(current_x - prev_x)
-        )
-    );
     const angle =
       90 -
-      Math.atan2(
+      (Math.atan2(
         Math.sin(current_x - prev_x),
         Math.cos(prev_y) * Math.tan(current_y) -
           Math.sin(prev_y) * Math.cos(current_x - prev_x)
-      );
+      ) *
+        180) /
+        Math.PI +
+      180;
     return angle;
   }
 }
