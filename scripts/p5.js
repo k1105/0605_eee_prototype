@@ -31,14 +31,15 @@ function draw() {
     255 * (length / 1000) ** 3,
     255 * (length / 1000) ** 3
   );
-  // if (length > 1000) {
-  //   if (toggle) {
-  //     background(255, 0, 0);
-  //   } else {
-  //     background(255);
-  //   }
-  //   toggle = !toggle;
-  // }
+
+  push();
+  fill(0);
+  textSize(400);
+  noStroke();
+  text(Math.round(length * 100) / 100, 10, 800);
+  textSize(36);
+  text(geo_text, 10, 40);
+  pop();
 
   push();
   stroke(240, 240, 255);
@@ -73,15 +74,6 @@ function draw() {
   endShape(CLOSE);
   pop();
 
-  push();
-  fill(0);
-  textSize(400);
-  noStroke();
-  text(Math.round(length * 100) / 100, 10, 800);
-  textSize(36);
-  text(geo_text, 10, 40);
-  pop();
-
   for (let i = 0; i < num; i++) {
     points[i].setRadius(300 * noise((hoge + 100 * i) / 1000));
   }
@@ -95,17 +87,17 @@ setInterval(() => {
 }, 10000);
 
 function test2(position) {
-  geo_text = "緯度:" + position.coords.latitude + "\n";
-  geo_text += "経度:" + position.coords.longitude + "\n";
-  geo_text += "高度:" + position.coords.altitude + "\n";
-  geo_text += "位置精度:" + position.coords.accuracy + "\n";
-  geo_text += "高度精度:" + position.coords.altitudeAccuracy + "\n";
-  geo_text += "移動方向:" + position.coords.heading + "\n";
-  geo_text += "速度:" + position.coords.speed + "\n";
+  geo_text = "Latitude:" + position.coords.latitude + "\n";
+  geo_text += "Longitude: " + position.coords.longitude + "\n";
+  geo_text += "Altitude: " + position.coords.altitude + "\n";
+  geo_text += "Accuracy: " + position.coords.accuracy + "\n";
+  geo_text += "Altitude Accuracy:" + position.coords.altitudeAccuracy + "\n";
+  geo_text += "Heading: " + position.coords.heading + "\n";
+  geo_text += "Speed: " + position.coords.speed + "\n";
 
   let date = new Date(position.timestamp);
 
-  geo_text += "取得時刻:" + date.toLocaleString() + "\n";
+  geo_text += "Date: " + date.toLocaleString() + "\n";
 
   //console.log(geo_text);
 }
