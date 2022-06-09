@@ -102,7 +102,7 @@ function draw() {
   //   points[i].setRadius(300 * noise((hoge + 100 * i) / 1000));
   // }
 
-  const angle = -1;
+  let angle = -1;
   if (typeof alpha !== "undefined") {
     angle = floor(alpha / (360 / num));
   }
