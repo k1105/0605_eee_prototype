@@ -104,11 +104,11 @@ function draw() {
   endShape(CLOSE);
   pop();
 
-  if (length < 300) {
+  if (length < 500) {
     vector = 1;
   }
 
-  if (length > 2000) {
+  if (length > 1500) {
     vector = -1;
   }
 
