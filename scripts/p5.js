@@ -121,7 +121,7 @@ function printGpsInfo(position) {
 
   pos_prev = pos_current;
   pos_current = position;
-  deltas = [];
+  deltas = new Array(num).fill(0);
   t = 0;
 
   if (typeof pos_prev !== "undefined") {
