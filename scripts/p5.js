@@ -8,7 +8,7 @@ function setup() {
   //キャンバスの中心に直径100pxの丸を描画
   //ellipse(width / 2, height / 2, 100);
   for (let theta = 0; theta < 2 * Math.PI; theta += (2 * Math.PI) / num) {
-    points.push(new Point(100 * random(0.5, 2), theta));
+    points.push(new Point(200, theta));
     deltas.push(0);
   }
 }
@@ -26,6 +26,8 @@ const lapse = 50; //lapse フレームで遷移アニメーション.
 
 let points = [];
 let deltas = [];
+
+let pos_prev, pos_current;
 
 function draw() {
   //notify death
@@ -47,11 +49,11 @@ function draw() {
 
   push();
   stroke(240, 240, 255);
-  // translate(
-  //   width / 2 + 400 * noise(hoge / 1000) - 200,
-  //   height / 2 + 400 * noise((hoge + 50) / 1000) - 200
-  // );
-  translate(width / 2, height / 2);
+  translate(
+    width / 2 + 400 * noise(hoge / 1000) - 200,
+    height / 2 + 400 * noise((hoge + 50) / 1000) - 200
+  );
+  // translate(width / 2, height / 2);
   for (let n = 0; n < points.length; n++) {
     point(points[n].x, points[n].y);
   }
@@ -85,9 +87,7 @@ function draw() {
 
   if (t < lapse) {
     for (let i = 0; i < num; i++) {
-      console.log(points[i].r);
       points[i].setRadius(points[i].r + deltas[i] / lapse);
-      console.log(points[i].r);
     }
     t++;
   }
@@ -98,13 +98,13 @@ function draw() {
 
 setInterval(() => {
   navigator.geolocation.getCurrentPosition(printGpsInfo);
-}, 10000);
+}, 5000);
 
-setInterval(() => {
-  deltas = getRadiusDelta(points);
-  console.log(deltas);
-  t = 0;
-}, 3000);
+// setInterval(() => {
+//   deltas = getRadiusDelta(points);
+//   console.log(deltas);
+//   t = 0;
+// }, 2000);
 
 function printGpsInfo(position) {
   geo_text = "Latitude:" + position.coords.latitude + "\n";
@@ -118,6 +118,26 @@ function printGpsInfo(position) {
   let date = new Date(position.timestamp);
 
   geo_text += "Date: " + date.toLocaleString() + "\n";
+
+  pos_prev = pos_current;
+  pos_current = position;
+  deltas = [];
+  t = 0;
+
+  if (typeof pos_prev !== "undefined") {
+    console.log(CalcDistance(pos_prev, pos_current));
+    console.log(CalcAngle(pos_prev, pos_current, num));
+    const angle = CalcAngle(pos_prev, pos_current, num);
+    if (angle !== -1) {
+      for (let i = 0; i < points.length; i++) {
+        if (i == angle) {
+          deltas.push(50);
+        } else {
+          deltas.push(0);
+        }
+      }
+    }
+  }
 
   //console.log(geo_text);
 }

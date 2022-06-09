@@ -1,5 +1,6 @@
 const giftwrap = (points) => {
-  //pointsのうち、x最小のものを見つける. もし最小のxをとるpointが複数ある場合は、その中でもyが最小のものを選ぶ
+  // giftwrap法によって二次元平面上に与えられた点群から凸包をなす頂点を選択してその頂点番号（配列のインデックス）を返す関数.
+  // pointsのうち、x最小のものを見つける. もし最小のxをとるpointが複数ある場合は、その中でもyが最小のものを選ぶ
   index = 0;
   for (let i = 1; i < points.length; i++) {
     if (points[i].y > points[index].y) {
