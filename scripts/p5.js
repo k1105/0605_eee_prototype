@@ -21,12 +21,15 @@ const num = 8;
 let length = 0;
 let toggle = true;
 let geo_text = "";
-let devise_gyro = "";
+let devise_info = "";
 let t = 0;
 let absolute,
   alpha,
   beta,
   gamma = 0;
+let aX,
+  aY,
+  aZ = 0;
 const lapse = 50; //lapse フレームで遷移アニメーション.
 
 let points = [];
@@ -50,12 +53,15 @@ function draw() {
   text(Math.round(length * 100) / 100, 10, 800);
   textSize(36);
   text(geo_text, 10, 40);
-  devise_gyro = "";
-  devise_gyro += "absolute: " + absolute + "\n";
-  devise_gyro += "alpha: " + alpha + "\n";
-  devise_gyro += "beta: " + beta + "\n";
-  devise_gyro += "gamma: " + gamma;
-  text(devise_gyro, 10, 150);
+  devise_info = "";
+  devise_info += "absolute: " + absolute + "\n";
+  devise_info += "alpha: " + alpha + "\n";
+  devise_info += "beta: " + beta + "\n";
+  devise_info += "gamma: " + gamma + "\n";
+  devise_info += "aX: " + aX + "\n";
+  devise_info += "aY: " + aY + "\n";
+  devise_info += "aZ: " + aZ + "\n";
+  text(devise_info, 10, 150);
   pop();
 
   push();
@@ -169,3 +175,10 @@ function handleOrientation(event) {
   beta = event.beta;
   gamma = event.gamma;
 }
+
+// 加速度センサの値が変化したら実行される devicemotion イベント
+window.addEventListener("devicemotion", (dat) => {
+  aX = dat.accelerationIncludingGravity.x; // x軸の重力加速度（Android と iOSでは正負が逆）
+  aY = dat.accelerationIncludingGravity.y; // y軸の重力加速度（Android と iOSでは正負が逆）
+  aZ = dat.accelerationIncludingGravity.z; // z軸の重力加速度（Android と iOSでは正負が逆）
+});
