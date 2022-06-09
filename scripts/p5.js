@@ -8,7 +8,7 @@ function setup() {
   //キャンバスの中心に直径100pxの丸を描画
   //ellipse(width / 2, height / 2, 100);
   for (let theta = 0; theta < 2 * Math.PI; theta += (2 * Math.PI) / num) {
-    points.push(new Point(200, theta));
+    points.push(new Point(100, theta));
     deltas.push(0);
   }
 }
@@ -107,7 +107,7 @@ function draw() {
     angle = floor(alpha / (360 / num));
   }
   if (angle !== -1) {
-    points[angle].setRadius(points[angle].r + 1);
+    points[angle].setRadius(points[angle].r + 4);
   }
 
   if (t < lapse) {
