@@ -102,6 +102,14 @@ function draw() {
   //   points[i].setRadius(300 * noise((hoge + 100 * i) / 1000));
   // }
 
+  const angle = -1;
+  if (typeof alpha !== "undefined") {
+    angle = floor(alpha / (360 / num));
+  }
+  if (angle !== -1) {
+    points[angle].setRadius(points[angle].r + 1);
+  }
+
   if (t < lapse) {
     for (let i = 0; i < num; i++) {
       points[i].setRadius(points[i].r + deltas[i] / lapse);
@@ -149,10 +157,14 @@ function printGpsInfo(position) {
     geo_text += "Distance:" + CalcDistance(pos_prev, pos_current) + "\n";
     geo_text += "Angle:" + CalcAngle(pos_prev, pos_current, num);
 
-    const angle = floor(CalcAngle(pos_prev, pos_current, num) / (360 / num));
-    if (angle !== -1) {
-      deltas[angle] = 50;
-    }
+    //const angle = floor(CalcAngle(pos_prev, pos_current, num) / (360 / num));
+    // const angle = -1;
+    // if (typeof alpha !== "undefined") {
+    //   angle = floor(alpha / (360 / num));
+    // }
+    // if (angle !== -1) {
+    //   deltas[angle] = 1;
+    // }
   }
   //console.log(geo_text);
 }
