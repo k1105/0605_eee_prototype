@@ -22,6 +22,8 @@ let i = begin;
 let hoge = 0;
 const time = 10;
 const num = 8;
+let length = 0;
+let toggle = true;
 
 function draw() {
   if (i < end) {
@@ -30,7 +32,21 @@ function draw() {
     //console.log(i);
   }
 
-  background(255);
+  //notify death
+
+  background(
+    255 * (length / 1000) ** 3,
+    255 * (length / 1000) ** 3,
+    255 * (length / 1000) ** 3
+  );
+  if (length > 1000) {
+    if (toggle) {
+      background(255, 0, 0);
+    } else {
+      background(255);
+    }
+    toggle = !toggle;
+  }
 
   push();
   stroke(240, 240, 255);
@@ -43,12 +59,14 @@ function draw() {
   }
 
   stroke(240, 152, 6);
+  fill(240, 152, 6);
   //stroke(230, 230, 255);
 
   convex_indices = giftwrap(points);
   // draw convex envelope
   //console.log(convex_indices);
-  let length = 0;
+  length = 0;
+  beginShape();
   for (let m = 0; m < convex_indices.length; m++) {
     length += sqrt(
       (points[convex_indices[m]].x -
@@ -58,95 +76,22 @@ function draw() {
           points[convex_indices[(m + 1) % convex_indices.length]].y) **
           2
     );
-    line(
-      points[convex_indices[m]].x,
-      points[convex_indices[m]].y,
-      points[convex_indices[(m + 1) % convex_indices.length]].x,
-      points[convex_indices[(m + 1) % convex_indices.length]].y
-    );
+    vertex(points[convex_indices[m]].x, points[convex_indices[m]].y);
   }
+  endShape(CLOSE);
   pop();
 
   push();
   fill(0);
-  textSize(32);
+  textSize(400);
   noStroke();
-  text("envelope length: " + length, 10, 30);
+  text(Math.round(length * 100) / 100, 10, 800);
   pop();
 
   for (let i = 0; i < num; i++) {
     points[i].setRadius(300 * noise((hoge + 100 * i) / 1000));
   }
   hoge++;
-  //points[5].setRadius(i);
-  //points[3].setRadius(i);
 }
 
-class Point {
-  constructor(r, theta) {
-    this.x = r * Math.cos(theta);
-    this.y = r * Math.sin(theta);
-    this.r = r;
-    this.theta = theta;
-  }
-
-  setRadius(r) {
-    this.r = r;
-    this.x = r * Math.cos(this.theta);
-    this.y = r * Math.sin(this.theta);
-  }
-  setAngle(theta) {
-    this.theta = theta;
-    this.x = this.r * Math.cos(theta);
-    this.y = this.r * Math.sin(theta);
-  }
-}
-
-const giftwrap = (points) => {
-  //pointsのうち、x最小のものを見つける. もし最小のxをとるpointが複数ある場合は、その中でもyが最小のものを選ぶ
-  index = 0;
-  for (let i = 1; i < points.length; i++) {
-    if (points[i].y > points[index].y) {
-      index = i;
-    } else if (
-      points[i].y == points[index].y &&
-      points[i].x > points[index].x
-    ) {
-      index = i;
-    }
-  }
-
-  const convex_indices = [];
-  convex_indices.push(index);
-
-  let prev_min_delta = -100;
-  //最初の注目点は先の計算でもとまったindexに該当する点。
-  //重複をチェックすることで一巡したことを確認する。
-  while (true) {
-    let min_delta = 100;
-    for (let i = 0; i < points.length; i++) {
-      if (i != index) {
-        //偏角を求める
-        delta = atan2(
-          points[i].y - points[index].y,
-          points[i].x - points[index].x
-        );
-        //console.log("delta: " + delta);
-        if (prev_min_delta < delta && delta < min_delta) {
-          if (i == convex_indices[0] || !convex_indices.includes(i)) {
-            min_delta = delta;
-            tmp = i;
-          }
-        }
-      }
-    }
-
-    prev_min_delta = min_delta;
-    index = tmp;
-    //console.log("min_delta: " + min_delta);
-    if (index == convex_indices[0]) break;
-    convex_indices.push(index);
-  }
-
-  return convex_indices;
-};
+// draw関数終了

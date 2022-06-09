@@ -1,6 +1,6 @@
-function test() {
+setInterval(() => {
   navigator.geolocation.getCurrentPosition(test2);
-}
+}, 10000);
 
 function test2(position) {
   var geo_text = "緯度:" + position.coords.latitude + "\n";
@@ -15,5 +15,5 @@ function test2(position) {
 
   geo_text += "取得時刻:" + date.toLocaleString() + "\n";
 
-  alert(geo_text);
+  console.log(geo_text);
 }
