@@ -129,13 +129,7 @@ function printGpsInfo(position) {
     console.log(CalcAngle(pos_prev, pos_current, num));
     const angle = CalcAngle(pos_prev, pos_current, num);
     if (angle !== -1) {
-      for (let i = 0; i < points.length; i++) {
-        if (i == angle) {
-          deltas.push(50);
-        } else {
-          deltas.push(0);
-        }
-      }
+      deltas[angle] = 50;
     }
   }
 
