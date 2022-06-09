@@ -21,7 +21,12 @@ const num = 8;
 let length = 0;
 let toggle = true;
 let geo_text = "";
+let devise_gyro = "";
 let t = 0;
+let absolute,
+  alpha,
+  beta,
+  gamma = 0;
 const lapse = 50; //lapse フレームで遷移アニメーション.
 
 let points = [];
@@ -45,6 +50,12 @@ function draw() {
   text(Math.round(length * 100) / 100, 10, 800);
   textSize(36);
   text(geo_text, 10, 40);
+  devise_gyro = "";
+  devise_gyro += "absolute: " + absolute + "\n";
+  devise_gyro += "alpha: " + alpha + "\n";
+  devise_gyro += "beta: " + beta + "\n";
+  devise_gyro += "gamma: " + gamma;
+  text(devise_gyro, 10, 150);
   pop();
 
   push();
@@ -148,4 +159,13 @@ function getRadiusDelta(points) {
   }
 
   return deltas;
+}
+
+window.addEventListener("deviceorientation", handleOrientation, true);
+
+function handleOrientation(event) {
+  absolute = event.absolute;
+  alpha = event.alpha;
+  beta = event.beta;
+  gamma = event.gamma;
 }
