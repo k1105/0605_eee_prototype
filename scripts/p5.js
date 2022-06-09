@@ -107,32 +107,36 @@ setInterval(() => {
 // }, 2000);
 
 function printGpsInfo(position) {
-  geo_text = "Latitude:" + position.coords.latitude + "\n";
-  geo_text += "Longitude: " + position.coords.longitude + "\n";
-  geo_text += "Altitude: " + position.coords.altitude + "\n";
-  geo_text += "Accuracy: " + position.coords.accuracy + "\n";
-  geo_text += "Altitude Accuracy:" + position.coords.altitudeAccuracy + "\n";
-  geo_text += "Heading: " + position.coords.heading + "\n";
-  geo_text += "Speed: " + position.coords.speed + "\n";
+  // geo_text = "Latitude:" + position.coords.latitude + "\n";
+  // geo_text += "Longitude: " + position.coords.longitude + "\n";
+  // geo_text += "Altitude: " + position.coords.altitude + "\n";
+  // geo_text += "Accuracy: " + position.coords.accuracy + "\n";
+  // geo_text += "Altitude Accuracy:" + position.coords.altitudeAccuracy + "\n";
+  // geo_text += "Heading: " + position.coords.heading + "\n";
+  // geo_text += "Speed: " + position.coords.speed + "\n";
 
-  let date = new Date(position.timestamp);
+  // let date = new Date(position.timestamp);
 
-  geo_text += "Date: " + date.toLocaleString() + "\n";
+  // geo_text += "Date: " + date.toLocaleString() + "\n";
 
   pos_prev = pos_current;
   pos_current = position;
   deltas = new Array(num).fill(0);
   t = 0;
 
+  geo_text = "";
+
   if (typeof pos_prev !== "undefined") {
-    console.log(CalcDistance(pos_prev, pos_current));
-    console.log(CalcAngle(pos_prev, pos_current, num));
-    const angle = CalcAngle(pos_prev, pos_current, num);
+    // console.log(CalcDistance(pos_prev, pos_current));
+    // console.log(CalcAngle(pos_prev, pos_current, num));
+    geo_text += "Distance:" + CalcDistance(pos_prev, pos_current) + "\n";
+    geo_text += "Angle:" + CalcAngle(pos_prev, pos_current, num);
+
+    const angle = floor(CalcAngle(pos_prev, pos_current, num) / (360 / num));
     if (angle !== -1) {
       deltas[angle] = 50;
     }
   }
-
   //console.log(geo_text);
 }
 

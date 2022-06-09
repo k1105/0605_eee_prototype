@@ -26,6 +26,6 @@ function CalcAngle(pos_prev, pos_current, num) {
         Math.cos(prev_y) * Math.tan(current_y) -
           Math.sin(prev_y) * Math.cos(current_x - prev_x)
       );
-    return floor(angle / (360 / num));
+    return angle;
   }
 }
