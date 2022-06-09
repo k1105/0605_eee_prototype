@@ -19,7 +19,7 @@ let hoge = 0;
 const time = 10;
 const num = 8;
 let length = 0;
-let toggle = true;
+let vector = 1;
 let geo_text = "";
 let devise_info = "";
 let t = 0;
@@ -75,8 +75,14 @@ function draw() {
     point(points[n].x, points[n].y);
   }
 
-  stroke(240, 152, 6);
-  fill(240, 152, 6);
+  if (vector == 1) {
+    stroke(240, 152, 6);
+    fill(240, 152, 6);
+  } else {
+    stroke(15, 103, 249);
+    fill(15, 103, 249);
+  }
+
   //stroke(230, 230, 255);
 
   convex_indices = giftwrap(points);
@@ -98,6 +104,14 @@ function draw() {
   endShape(CLOSE);
   pop();
 
+  if (length < 300) {
+    vector = 1;
+  }
+
+  if (length > 2000) {
+    vector = -1;
+  }
+
   // for (let i = 0; i < num; i++) {
   //   points[i].setRadius(300 * noise((hoge + 100 * i) / 1000));
   // }
@@ -107,7 +121,10 @@ function draw() {
     angle = floor((alpha + 180 / num) / (360 / num)) % num;
   }
   if (angle !== -1) {
-    points[angle].setRadius(points[angle].r + 4);
+    points[angle].setRadius(points[angle].r + vector * 4);
+    if (points[angle].r <= 0) {
+      points[angle].setRadius(0);
+    }
   }
 
   if (t < lapse) {
