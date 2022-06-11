@@ -8,11 +8,11 @@ function setup() {
   //キャンバスの中心に直径100pxの丸を描画
   //ellipse(width / 2, height / 2, 100);
   for (let theta = 0; theta < 2 * Math.PI; theta += (2 * Math.PI) / num) {
-    points.push(new Point(100, theta));
+    points.push(new Point(80, theta));
   }
 }
 
-let convex_indices;
+let convex_indices = [];
 let angle = -1;
 let hoge = 0;
 const num = 8;
@@ -38,9 +38,9 @@ function draw() {
     width / 2 + (width / 2) * noise(hoge / 500) - width / 4,
     height / 2 + (height / 2) * noise((hoge + 50) / 500) - height / 4
   );
-  for (let n = 0; n < points.length; n++) {
-    point(points[n].x, points[n].y);
-  }
+  // for (let n = 0; n < points.length; n++) {
+  //   point(points[n].x, points[n].y);
+  // }
 
   if (vector == 1) {
     stroke(240, 152, 6);
@@ -81,11 +81,11 @@ window.addEventListener(
 );
 
 setInterval(() => {
-  if (length < 500) {
+  if (length < 300) {
     vector = 1;
   }
 
-  if (length > 1500) {
+  if (length > 1000) {
     vector = -1;
   }
 
