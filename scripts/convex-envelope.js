@@ -94,7 +94,7 @@ setInterval(() => {
     angle = floor((alpha + 180 / num) / (360 / num)) % num;
   }
   if (angle !== -1) {
-    points[angle].setRadius(points[angle].r + vector * 3);
+    points[angle].setRadius(points[angle].r + vector * 1);
     if (points[angle].r <= 0) {
       points[angle].setRadius(0);
     }
