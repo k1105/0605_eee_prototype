@@ -59,7 +59,7 @@ function draw() {
   let angle = -1;
   if (typeof alpha !== "undefined") {
     angle = floor((alpha + 180 / num) / (360 / num)) % num;
-    angle = (num - angle) % num;
+    angle = (((num - angle) % num) + 4) % num;
   }
   if (angle !== -1) {
     points[angle].setRadius(points[angle].r + vector * 4);
