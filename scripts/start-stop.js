@@ -14,8 +14,8 @@ function draw() {
 let vibration = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let time = 0;
 let walking_scalar = 1.0;
-const top_threshold = 1.2;
-const bottom_threshold = 0.85;
+const top_threshold = 1.05;
+const bottom_threshold = 0.95;
 let walking_flag;
 
 const elem = document.getElementById("innerHTMLtxt");
