@@ -14,7 +14,13 @@
         <a href="./gyro-rotate-graph.html">gyro-rotate-graph</a>
         <a href="./convex-envelope.html">convex-envelope</a>
     </header>
-    <div id="innerHTMLtxt"></div>
+    <div class="slidecontainer">
+        <p id="topThresholdValue" style="display: inline;">1.05</p>
+        <input style="display: inline;" type="range" min="100" max="200" value="105" class="slider" id="topThresholdSlider">
+        <p id="bottomThresholdValue" style="display: inline;">0.95</p>
+        <input  style="display: inline;" type="range" min="60" max="100" value="95" class="slider" id="bottomThresholdSlider">
+    </div>
+    <div id="innerHTMLtxt" style="width: 100vw; height: 100vh;"></div>
   </body>
   <script src="./scripts/start-stop.js"></script>
 </html>

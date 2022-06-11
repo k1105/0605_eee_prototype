@@ -1,32 +1,32 @@
-function setup() {
-  createCanvas(window.innerWidth, window.innerHeight);
-}
-
-function draw() {
-  background(0);
-  if (walking_flag == 1) {
-    background(0, 0, 255);
-  } else if (walking_flag == 0) {
-    background(255, 0, 0);
-  }
-}
-
 let vibration = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let time = 0;
 let walking_scalar = 1.0;
-const top_threshold = 1.05;
-const bottom_threshold = 0.95;
+let top_threshold = 1.05;
+let bottom_threshold = 0.95;
 let walking_flag;
 
 const elem = document.getElementById("innerHTMLtxt");
 
-// setInterval(() => {
-//   if (walking_flag == 1) {
-//     elem.innerHTML = "歩行中";
-//   } else if (walking_flag == 0) {
-//     elem.innerHTML = "停止中";
-//   }
-// }, 100);
+const top_threshold_value = document.getElementById("topThresholdValue");
+const bottom_threshold_value = document.getElementById("bottomThresholdValue");
+const top_threshold_slider = document.getElementById("topThresholdSlider");
+const bottom_threshold_slider = document.getElementById(
+  "bottomThresholdSlider"
+);
+
+setInterval(() => {
+  if (walking_flag == 1) {
+    elem.style.backgroundColor = "#0000ff";
+  } else if (walking_flag == 0) {
+    elem.style.backgroundColor = "#ff0000";
+  } else {
+    elem.style.backgroundColor = "#000000";
+  }
+  top_threshold_value.innerHTML = top_threshold_slider.value / 100;
+  bottom_threshold_value.innerHTML = bottom_threshold_slider.value / 100;
+  top_threshold = top_threshold_slider.value / 100;
+  bottom_threshold = bottom_threshold_slider.value / 100;
+}, 100);
 
 window.addEventListener(
   "devicemotion",
