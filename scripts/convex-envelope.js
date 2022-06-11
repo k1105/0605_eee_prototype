@@ -21,6 +21,8 @@ let vector = 1;
 let alpha, beta, gamma;
 let points = [];
 let pos_prev, pos_current;
+let inner_text = "";
+let status_text = "";
 
 function draw() {
   //notify death
@@ -30,6 +32,21 @@ function draw() {
     255 * (length / 1000) ** 3,
     255 * (length / 1000) ** 3
   );
+
+  push();
+  fill(0);
+  textSize(150);
+  inner_text = length.toFixed(2);
+  text(inner_text, 30, 400);
+  if (vector == 1) {
+    status_text = "Expanding until \nenvelope length \n< 1000";
+  } else {
+    status_text = "Shrinking while \nenvelope length \n> 100";
+  }
+  textSize(40);
+  text(status_text, 30, 470);
+
+  pop();
 
   push();
 
@@ -94,7 +111,7 @@ setInterval(() => {
     angle = floor((alpha + 180 / num) / (360 / num)) % num;
   }
   if (angle !== -1) {
-    points[angle].setRadius(points[angle].r + vector * 1);
+    points[angle].setRadius(points[angle].r + vector * 0.3);
     if (points[angle].r <= 0) {
       points[angle].setRadius(0);
     }
