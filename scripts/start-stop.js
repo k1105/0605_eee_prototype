@@ -5,6 +5,7 @@ let walking_scalar = 1.0;
 let top_threshold = 1.05;
 let bottom_threshold = 0.95;
 let walking_flag;
+const walking_flags = new Array(5).fill(0);
 
 const elem = document.getElementById("innerHTMLtxt");
 
@@ -17,6 +18,17 @@ const bottom_threshold_slider = document.getElementById(
 const vibration_ratio = document.getElementById("vibrationRatio");
 
 setInterval(() => {
+  let sum = 0;
+  for (let i = 0; i < walking_flags.length; i++) {
+    sum += walking_flags[i];
+  }
+
+  if (sum > 2) {
+    walking_flag = 1;
+  } else {
+    walking_flag = 0;
+  }
+
   if (walking_flag == 1) {
     elem.style.backgroundColor = "#0000ff";
   } else if (walking_flag == 0) {
@@ -64,10 +76,11 @@ window.addEventListener(
         vibration_ratio_value > top_threshold ||
         vibration_ratio_value < bottom_threshold
       ) {
-        walking_flag = 1;
+        walking_flags.push(1);
       } else {
-        walking_flag = 0;
+        walking_flags.push(0);
       }
+      walking_flags.shift();
       time = 0;
     }
   },
