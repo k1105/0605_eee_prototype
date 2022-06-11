@@ -111,32 +111,32 @@ setInterval(() => {
     z_degrees.push(z_degree);
   }
 
-  elem.innerHTML =
-    "acceleration_x: " +
-    x +
-    " <br />" +
-    "acceleratio_y: " +
-    y +
-    " <br />" +
-    "acceleration_z: " +
-    z +
-    " <br />" +
-    "x_orientation: " +
-    x_orientation +
-    "<br />" +
-    "y_orientation: " +
-    y_orientation +
-    "<br />" +
-    "z_orientation: " +
-    z_orientation +
-    "<br />" +
-    "x_degree: " +
-    x_degree +
-    "<br />" +
-    "y_degree: " +
-    y_degree +
-    "<br />" +
-    "z_degree: " +
-    z_degree +
-    "<br />";
+  // elem.innerHTML =
+  //   "acceleration_x: " +
+  //   x +
+  //   " <br />" +
+  //   "acceleratio_y: " +
+  //   y +
+  //   " <br />" +
+  //   "acceleration_z: " +
+  //   z +
+  //   " <br />" +
+  //   "x_orientation: " +
+  //   x_orientation +
+  //   "<br />" +
+  //   "y_orientation: " +
+  //   y_orientation +
+  //   "<br />" +
+  //   "z_orientation: " +
+  //   z_orientation +
+  //   "<br />" +
+  //   "x_degree: " +
+  //   x_degree +
+  //   "<br />" +
+  //   "y_degree: " +
+  //   y_degree +
+  //   "<br />" +
+  //   "z_degree: " +
+  //   z_degree +
+  //   "<br />";
 }, 10);
