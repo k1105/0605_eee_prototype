@@ -12,15 +12,15 @@ function draw() {
 
   background(255);
   for (let i = 0; i < 100; i++) {
-    point(i * 10, 300 - xs[i]);
-    point(i * 10, 400 - ys[i]);
-    point(i * 10, 500 - zs[i]);
-    point(i * 10, 600 - x_orientations[i]);
-    point(i * 10, 700 - y_orientations[i]);
-    point(i * 10, 800 - z_orientations[i]);
-    point(i * 10, 900 - x_degrees[i]);
-    point(i * 10, 1000 - y_degrees[i]);
-    point(i * 10, 1100 - z_degrees[i]);
+    point(i * 10, 200 - xs[i]);
+    point(i * 10, 300 - ys[i]);
+    point(i * 10, 400 - zs[i]);
+    point(i * 10, 500 - x_orientations[i]);
+    point(i * 10, 600 - y_orientations[i]);
+    point(i * 10, 700 - z_orientations[i]);
+    point(i * 10, 800 - x_degrees[i]);
+    point(i * 10, 900 - y_degrees[i]);
+    point(i * 10, 1000 - z_degrees[i]);
   }
 }
 
@@ -112,13 +112,13 @@ setInterval(() => {
   }
 
   elem.innerHTML =
-    "accelerationIncludingGravity.x: " +
+    "acceleration_x: " +
     x +
     " <br />" +
-    "accelerationIncludingGravity.y: " +
+    "acceleratio_y: " +
     y +
     " <br />" +
-    "accelerationIncludingGravity.z: " +
+    "acceleration_z: " +
     z +
     " <br />" +
     "x_orientation: " +
