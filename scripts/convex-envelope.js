@@ -13,30 +13,6 @@ function setup() {
   }
 }
 
-//TODO: easing animationで円が楕円形に収束
-
-let hoge = 0;
-const time = 10;
-const num = 8;
-let length = 0;
-let vector = 1;
-let geo_text = "";
-let devise_info = "";
-let t = 0;
-let absolute,
-  alpha,
-  beta,
-  gamma = 0;
-let aX,
-  aY,
-  aZ = 0;
-const lapse = 50; //lapse フレームで遷移アニメーション.
-
-let points = [];
-let deltas = [];
-
-let pos_prev, pos_current;
-
 function draw() {
   //notify death
 
@@ -61,7 +37,8 @@ function draw() {
     angle = floor((alpha + 180 / num) / (360 / num)) % num;
     angle = (((num - angle) % num) + 4) % num;
   }
-  if (angle !== -1) {
+  if (angle !== -1 && walking_flag == 1) {
+    //歩行中であれば
     points[angle].setRadius(points[angle].r + vector * 4);
     if (points[angle].r <= 0) {
       points[angle].setRadius(0);
@@ -115,18 +92,101 @@ function draw() {
 
 // draw関数終了
 
-window.addEventListener("deviceorientation", handleOrientation, true);
+//TODO: easing animationで円が楕円形に収束
 
-function handleOrientation(event) {
-  absolute = event.absolute;
-  alpha = event.alpha;
-  beta = event.beta;
-  gamma = event.gamma;
-}
+let hoge = 0;
+const num = 8;
+let length = 0;
+let vector = 1;
+let geo_text = "";
+let devise_info = "";
+let t = 0;
+let alpha, beta, gamma;
+const lapse = 50; //lapse フレームで遷移アニメーション.
 
-// 加速度センサの値が変化したら実行される devicemotion イベント
-window.addEventListener("devicemotion", (dat) => {
-  aX = dat.accelerationIncludingGravity.x; // x軸の重力加速度（Android と iOSでは正負が逆）
-  aY = dat.accelerationIncludingGravity.y; // y軸の重力加速度（Android と iOSでは正負が逆）
-  aZ = dat.accelerationIncludingGravity.z; // z軸の重力加速度（Android と iOSでは正負が逆）
-});
+let points = [];
+let deltas = [];
+
+let pos_prev, pos_current;
+
+let vibration = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let vibration_ratio_value = 0;
+let flame = 0;
+let walking_scalar = 1.0;
+
+let latest_x = 0,
+  latest_y = 0;
+const top_threshold = 1.15;
+const bottom_threshold = 0.85;
+let walking_flag;
+const walking_flags = new Array(5).fill(0);
+
+setInterval(() => {
+  /* walking_flagの決定 */
+  let sum = 0;
+  for (let i = 0; i < walking_flags.length; i++) {
+    sum += walking_flags[i];
+  }
+
+  if (sum > 2) {
+    walking_flag = 1;
+  } else {
+    walking_flag = 0;
+  }
+
+  /* walking_flagの決定 終了 */
+}, 100);
+
+window.addEventListener(
+  "deviceorientation",
+  function (orientation_event) {
+    alpha = orientation_event.alpha;
+    beta = orientation_event.beta;
+    gamma = orientation_event.gamma;
+  },
+  true
+);
+
+window.addEventListener(
+  "devicemotion",
+  function (motion_event) {
+    let x = motion_event.accelerationIncludingGravity.x;
+    let y = motion_event.accelerationIncludingGravity.y;
+    let z = motion_event.accelerationIncludingGravity.z;
+
+    if (
+      typeof x !== "undefined" &&
+      typeof y !== "undefined" &&
+      typeof z !== "undefined"
+    ) {
+      vibration[flame] = Math.pow(x * x + y * y + z * z, 2);
+      flame++;
+    }
+
+    if (flame > 9) {
+      vibration_ratio_value =
+        (vibration[0] +
+          vibration[1] +
+          vibration[2] +
+          vibration[3] +
+          vibration[4]) /
+        (vibration[5] +
+          vibration[6] +
+          vibration[7] +
+          vibration[8] +
+          vibration[9] +
+          0.000001);
+      if (
+        vibration_ratio_value > top_threshold ||
+        vibration_ratio_value < bottom_threshold
+      ) {
+        walking_flags.push(1);
+      } else {
+        walking_flags.push(0);
+      }
+      walking_flags.shift();
+      flame = 0;
+    }
+  },
+  true
+);
