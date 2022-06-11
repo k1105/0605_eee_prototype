@@ -1,356 +1,69 @@
-function setup() {
-  //キャンバスを作成
-  createCanvas(window.windowWidth, window.windowHeight);
-  //背景色
-  //オブジェクトの色
-  noFill();
-  strokeWeight(10);
-}
-
-function draw() {
-  //notify death
-
-  background(255);
-  for (let i = 0; i < 100; i++) {
-    point(i * 10, 200 - xs[i]);
-    point(i * 10, 300 - ys[i]);
-    point(i * 10, 400 - zs[i]);
-    point(i * 10, 500 - x_orientations[i]);
-    point(i * 10, 600 - y_orientations[i]);
-    point(i * 10, 700 - z_orientations[i]);
-    point(i * 10, 800 - x_degrees[i]);
-    point(i * 10, 900 - y_degrees[i]);
-    point(i * 10, 1000 - z_degrees[i]);
-  }
-}
+let vibration = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let time = 0;
+let walking_scalar = 1.0;
+let top_threshold = 1.05;
+let bottom_threshold = 0.95;
+let walking_flag;
 
 const elem = document.getElementById("innerHTMLtxt");
-let x,
-  y,
-  z,
-  x_orientation,
-  y_orientation,
-  z_orientation,
-  x_degree,
-  y_degree,
-  z_degree;
 
-let t = 0;
-
-const xs = new Array(100).fill(0);
-const ys = new Array(100).fill(0);
-const zs = new Array(100).fill(0);
-const x_orientations = new Array(100).fill(0);
-const y_orientations = new Array(100).fill(0);
-const z_orientations = new Array(100).fill(0);
-const x_degrees = new Array(100).fill(0);
-const y_degrees = new Array(100).fill(0);
-const z_degrees = new Array(100).fill(0);
+setInterval(() => {
+  if (walking_flag == 1) {
+    elem.innerHTML = "歩行中";
+  } else if (walking_flag == 0) {
+    elem.innerHTML = "停止中";
+  }
+}, 100);
 
 window.addEventListener(
   "devicemotion",
   function (motion_event) {
-    x = motion_event.accelerationIncludingGravity.x;
-    y = motion_event.accelerationIncludingGravity.y;
-    z = motion_event.accelerationIncludingGravity.z;
+    let x = motion_event.accelerationIncludingGravity.x;
+    let y = motion_event.accelerationIncludingGravity.y;
+    let z = motion_event.accelerationIncludingGravity.z;
+
+    if (
+      typeof x !== "undefined" &&
+      typeof y !== "undefined" &&
+      typeof z !== "undefined"
+    ) {
+      vibration[time] = Math.pow(x * x + y * y + z * z, 2);
+      time++;
+    }
+
+    if (time > 9) {
+      if (
+        (vibration[0] +
+          vibration[1] +
+          vibration[2] +
+          vibration[3] +
+          vibration[4]) /
+          (vibration[5] +
+            vibration[6] +
+            vibration[7] +
+            vibration[8] +
+            vibration[9] +
+            0.000001) >
+          top_threshold ||
+        (vibration[0] +
+          vibration[1] +
+          vibration[2] +
+          vibration[3] +
+          vibration[4]) /
+          (vibration[5] +
+            vibration[6] +
+            vibration[7] +
+            vibration[8] +
+            vibration[9] +
+            0.000001) <
+          bottom_threshold
+      ) {
+        walking_flag = 1;
+      } else {
+        walking_flag = 0;
+      }
+      time = 0;
+    }
   },
   true
 );
-
-window.addEventListener(
-  "deviceorientation",
-  function (orientation_event) {
-    z_orientation = orientation_event.alpha;
-    x_orientation = orientation_event.beta;
-    y_orientation = orientation_event.gamma;
-
-    z_degree = (z_orientation.toFixed(1) * Math.PI) / 180;
-    x_degree = (x_orientation.toFixed(1) * Math.PI) / 180;
-    y_degree = (y_orientation.toFixed(1) * Math.PI) / 180;
-  },
-  true
-);
-
-setInterval(() => {
-  if (typeof x !== "undefined") {
-    xs.push(x);
-    xs.shift();
-  }
-  if (typeof y !== "undefined") {
-    ys.shift();
-    ys.push(y);
-  }
-  if (typeof z !== "undefined") {
-    zs.shift();
-    zs.push(z);
-  }
-
-  if (typeof x_orientation !== "undefined") {
-    x_orientations.shift();
-    x_orientations.push(x_orientation);
-  }
-  if (typeof y_orientation !== "undefined") {
-    y_orientations.shift();
-    y_orientations.push(y_orientation);
-  }
-  if (typeof z_orientation !== "undefined") {
-    z_orientations.shift();
-    z_orientations.push(z_orientation);
-  }
-
-  if (typeof x_degree !== "undefined") {
-    x_degrees.shift();
-    x_degrees.push(x_degree);
-  }
-  if (typeof y_degree !== "undefined") {
-    y_degrees.shift();
-    y_degrees.push(y_degree);
-  }
-  if (typeof z_degree !== "undefined") {
-    z_degrees.shift();
-    z_degrees.push(z_degree);
-  }
-
-  elem.innerHTML =
-    "acceleration_x: " +
-    x +
-    " <br />" +
-    "acceleratio_y: " +
-    y +
-    " <br />" +
-    "acceleration_z: " +
-    z +
-    " <br />" +
-    "x_orientation: " +
-    x_orientation +
-    "<br />" +
-    "y_orientation: " +
-    y_orientation +
-    "<br />" +
-    "z_orientation: " +
-    z_orientation +
-    "<br />" +
-    "x_degree: " +
-    x_degree +
-    "<br />" +
-    "y_degree: " +
-    y_degree +
-    "<br />" +
-    "z_degree: " +
-    z_degree +
-    "<br />";
-}, 10);
-
-// function setup() {
-//   //キャンバスを作成
-//   createCanvas(window.windowWidth, window.windowHeight);
-//   //背景色
-//   //オブジェクトの色
-//   noFill();
-//   strokeWeight(10);
-//   //キャンバスの中心に直径100pxの丸を描画
-//   //ellipse(width / 2, height / 2, 100);
-//   for (let theta = 0; theta < 2 * Math.PI; theta += (2 * Math.PI) / num) {
-//     points.push(new Point(100, theta));
-//     deltas.push(0);
-//   }
-// }
-
-// //TODO: easing animationで円が楕円形に収束
-
-// let hoge = 0;
-// const time = 10;
-// const num = 8;
-// let length = 0;
-// let vector = 1;
-// let geo_text = "";
-// let devise_info = "";
-// let t = 0;
-// let absolute,
-//   alpha,
-//   beta,
-//   gamma = 0;
-// let aX,
-//   aY,
-//   aZ = 0;
-// const lapse = 50; //lapse フレームで遷移アニメーション.
-
-// let points = [];
-// let deltas = [];
-
-// let pos_prev, pos_current;
-
-// function draw() {
-//   //notify death
-
-//   background(
-//     255 * (length / 1000) ** 3,
-//     255 * (length / 1000) ** 3,
-//     255 * (length / 1000) ** 3
-//   );
-
-//   // push();
-//   // fill(0);
-//   // textSize(400);
-//   // noStroke();
-//   // text(Math.round(length * 100) / 100, 10, 800);
-//   // textSize(36);
-//   // text(geo_text, 10, 40);
-//   // devise_info = "";
-//   // devise_info += "absolute: " + absolute + "\n";
-//   // devise_info += "alpha: " + alpha + "\n";
-//   // devise_info += "beta: " + beta + "\n";
-//   // devise_info += "gamma: " + gamma + "\n";
-//   // devise_info += "aX: " + aX + "\n";
-//   // devise_info += "aY: " + aY + "\n";
-//   // devise_info += "aZ: " + aZ + "\n";
-//   // text(devise_info, 10, 150);
-//   // pop();
-
-//   push();
-//   stroke(240, 240, 255);
-//   translate(
-//     width / 2 + (width / 2) * noise(hoge / 500) - width / 4,
-//     height / 2 + (height / 2) * noise((hoge + 50) / 500) - height / 4
-//   );
-//   // translate(width / 2, height / 2);
-//   for (let n = 0; n < points.length; n++) {
-//     point(points[n].x, points[n].y);
-//   }
-
-//   if (vector == 1) {
-//     stroke(240, 152, 6);
-//     fill(240, 152, 6);
-//   } else {
-//     stroke(15, 103, 249);
-//     fill(15, 103, 249);
-//   }
-
-//   //stroke(230, 230, 255);
-
-//   convex_indices = giftwrap(points);
-//   // draw convex envelope
-//   //console.log(convex_indices);
-//   length = 0;
-//   beginShape();
-//   for (let m = 0; m < convex_indices.length; m++) {
-//     length += sqrt(
-//       (points[convex_indices[m]].x -
-//         points[convex_indices[(m + 1) % convex_indices.length]].x) **
-//         2 +
-//         (points[convex_indices[m]].y -
-//           points[convex_indices[(m + 1) % convex_indices.length]].y) **
-//           2
-//     );
-//     vertex(points[convex_indices[m]].x, points[convex_indices[m]].y);
-//   }
-//   endShape(CLOSE);
-//   pop();
-
-//   if (length < 500) {
-//     vector = 1;
-//   }
-
-//   if (length > 1500) {
-//     vector = -1;
-//   }
-
-//   // for (let i = 0; i < num; i++) {
-//   //   points[i].setRadius(300 * noise((hoge + 100 * i) / 1000));
-//   // }
-
-//   let angle = -1;
-//   if (typeof alpha !== "undefined") {
-//     angle = floor((alpha + 180 / num) / (360 / num)) % num;
-//   }
-//   if (angle !== -1) {
-//     points[angle].setRadius(points[angle].r + vector * 4);
-//     if (points[angle].r <= 0) {
-//       points[angle].setRadius(0);
-//     }
-//   }
-
-//   if (t < lapse) {
-//     for (let i = 0; i < num; i++) {
-//       points[i].setRadius(points[i].r + deltas[i] / lapse);
-//     }
-//     t++;
-//   }
-//   hoge++;
-// }
-
-// // draw関数終了
-
-// // setInterval(() => {
-// //   navigator.geolocation.getCurrentPosition(printGpsInfo);
-// // }, 5000);
-
-// // setInterval(() => {
-// //   deltas = getRadiusDelta(points);
-// //   console.log(deltas);
-// //   t = 0;
-// // }, 2000);
-
-// function printGpsInfo(position) {
-//   // geo_text = "Latitude:" + position.coords.latitude + "\n";
-//   // geo_text += "Longitude: " + position.coords.longitude + "\n";
-//   // geo_text += "Altitude: " + position.coords.altitude + "\n";
-//   // geo_text += "Accuracy: " + position.coords.accuracy + "\n";
-//   // geo_text += "Altitude Accuracy:" + position.coords.altitudeAccuracy + "\n";
-//   // geo_text += "Heading: " + position.coords.heading + "\n";
-//   // geo_text += "Speed: " + position.coords.speed + "\n";
-
-//   // let date = new Date(position.timestamp);
-
-//   // geo_text += "Date: " + date.toLocaleString() + "\n";
-
-//   pos_prev = pos_current;
-//   pos_current = position;
-//   deltas = new Array(num).fill(0);
-//   t = 0;
-
-//   geo_text = "";
-
-//   if (typeof pos_prev !== "undefined") {
-//     // console.log(CalcDistance(pos_prev, pos_current));
-//     // console.log(CalcAngle(pos_prev, pos_current, num));
-//     geo_text += "Distance:" + CalcDistance(pos_prev, pos_current) + "\n";
-//     geo_text += "Angle:" + CalcAngle(pos_prev, pos_current, num);
-
-//     //const angle = floor(CalcAngle(pos_prev, pos_current, num) / (360 / num));
-//     // const angle = -1;
-//     // if (typeof alpha !== "undefined") {
-//     //   angle = floor(alpha / (360 / num));
-//     // }
-//     // if (angle !== -1) {
-//     //   deltas[angle] = 1;
-//     // }
-//   }
-//   //console.log(geo_text);
-// }
-
-// function getRadiusDelta(points) {
-//   //更新後の頂点の位置情報を返す関数.
-//   const deltas = [];
-//   for (let i = 0; i < points.length; i++) {
-//     deltas.push(300 * random(0.5, 1.5) - points[i].r);
-//   }
-
-//   return deltas;
-// }
-
-// window.addEventListener("deviceorientation", handleOrientation, true);
-
-// function handleOrientation(event) {
-//   absolute = event.absolute;
-//   alpha = event.alpha;
-//   beta = event.beta;
-//   gamma = event.gamma;
-// }
-
-// // 加速度センサの値が変化したら実行される devicemotion イベント
-// window.addEventListener("devicemotion", (dat) => {
-//   aX = dat.accelerationIncludingGravity.x; // x軸の重力加速度（Android と iOSでは正負が逆）
-//   aY = dat.accelerationIncludingGravity.y; // y軸の重力加速度（Android と iOSでは正負が逆）
-//   aZ = dat.accelerationIncludingGravity.z; // z軸の重力加速度（Android と iOSでは正負が逆）
-// });
