@@ -1,17 +1,81 @@
-function setup() {
-  //キャンバスを作成
-  createCanvas(window.windowWidth, window.windowHeight);
-  //背景色
-  //オブジェクトの色
-  noFill();
-  strokeWeight(10);
-}
+// function setup() {
+//   //キャンバスを作成
+//   createCanvas(window.windowWidth, window.windowHeight);
+//   //背景色
+//   //オブジェクトの色
+//   noFill();
+//   strokeWeight(10);
+// }
 
-function draw() {
-  //notify death
+// function draw() {
+//   //notify death
 
-  background(0);
-}
+//   background(0);
+// }
+
+elem = document.getElementById("innerHTMLtxt");
+let x,
+  y,
+  z,
+  x_orientation,
+  y_orientation,
+  z_orientation,
+  x_degree,
+  y_degree,
+  z_degree;
+
+window.addEventListener(
+  "devicemotion",
+  function (motion_event) {
+    x = motion_event.accelerationIncludingGravity.x;
+    y = motion_event.accelerationIncludingGravity.y;
+    z = motion_event.accelerationIncludingGravity.z;
+  },
+  true
+);
+
+window.addEventListener(
+  "deviceorientation",
+  function (orientation_event) {
+    z_orientation = orientation_event.alpha;
+    x_orientation = orientation_event.beta;
+    y_orientation = orientation_event.gamma;
+
+    z_degree = (z_orientation.toFixed(1) * Math.PI) / 180;
+    x_degree = (x_orientation.toFixed(1) * Math.PI) / 180;
+    y_degree = (y_orientation.toFixed(1) * Math.PI) / 180;
+  },
+  true
+);
+
+elem.innerHTML =
+  "accelerationIncludingGravity.x: " +
+  x +
+  " <br />" +
+  "accelerationIncludingGravity.y: " +
+  y +
+  " <br />" +
+  "accelerationIncludingGravity.z: " +
+  z +
+  " <br />" +
+  "x_orientation: " +
+  x_orientation +
+  "<br />" +
+  "y_orientation: " +
+  y_orientation +
+  "<br />" +
+  "z_orientation: " +
+  z_orientation +
+  "<br />" +
+  "x_degree: " +
+  x_degree +
+  "<br />" +
+  "y_degree: " +
+  y_degree +
+  "<br />" +
+  "z_degree: " +
+  z_degree +
+  "<br />";
 
 // function setup() {
 //   //キャンバスを作成
