@@ -1,8 +1,8 @@
 let vibration = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let time = 0;
 let walking_scalar = 1.0;
-let top_threshold = 1.05;
-let bottom_threshold = 0.95;
+const top_threshold = 1.2;
+const bottom_threshold = 0.85;
 let walking_flag;
 
 const elem = document.getElementById("innerHTMLtxt");
