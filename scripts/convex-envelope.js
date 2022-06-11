@@ -60,6 +60,8 @@ function draw() {
 
 // draw関数終了
 
+let convex_indices;
+let angle = -1;
 let hoge = 0;
 const num = 8;
 let length = 0;
@@ -89,7 +91,7 @@ setInterval(() => {
     vector = -1;
   }
 
-  let angle = -1;
+  angle = -1;
   if (typeof alpha !== "undefined") {
     angle = floor((alpha + 180 / num) / (360 / num)) % num;
   }
