@@ -46,23 +46,23 @@ function draw() {
     255 * (length / 1000) ** 3
   );
 
-  push();
-  fill(0);
-  textSize(400);
-  noStroke();
-  text(Math.round(length * 100) / 100, 10, 800);
-  textSize(36);
-  text(geo_text, 10, 40);
-  devise_info = "";
-  devise_info += "absolute: " + absolute + "\n";
-  devise_info += "alpha: " + alpha + "\n";
-  devise_info += "beta: " + beta + "\n";
-  devise_info += "gamma: " + gamma + "\n";
-  devise_info += "aX: " + aX + "\n";
-  devise_info += "aY: " + aY + "\n";
-  devise_info += "aZ: " + aZ + "\n";
-  text(devise_info, 10, 150);
-  pop();
+  // push();
+  // fill(0);
+  // textSize(400);
+  // noStroke();
+  // text(Math.round(length * 100) / 100, 10, 800);
+  // textSize(36);
+  // text(geo_text, 10, 40);
+  // devise_info = "";
+  // devise_info += "absolute: " + absolute + "\n";
+  // devise_info += "alpha: " + alpha + "\n";
+  // devise_info += "beta: " + beta + "\n";
+  // devise_info += "gamma: " + gamma + "\n";
+  // devise_info += "aX: " + aX + "\n";
+  // devise_info += "aY: " + aY + "\n";
+  // devise_info += "aZ: " + aZ + "\n";
+  // text(devise_info, 10, 150);
+  // pop();
 
   push();
   stroke(240, 240, 255);
@@ -138,9 +138,9 @@ function draw() {
 
 // draw関数終了
 
-setInterval(() => {
-  navigator.geolocation.getCurrentPosition(printGpsInfo);
-}, 5000);
+// setInterval(() => {
+//   navigator.geolocation.getCurrentPosition(printGpsInfo);
+// }, 5000);
 
 // setInterval(() => {
 //   deltas = getRadiusDelta(points);
