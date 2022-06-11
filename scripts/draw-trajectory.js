@@ -4,7 +4,7 @@ function setup() {
 }
 
 function draw() {
-  background(255);
+  background(255, 0.3);
   push();
   translate(width / 2, height / 2);
   point(latest_x, latest_y);
