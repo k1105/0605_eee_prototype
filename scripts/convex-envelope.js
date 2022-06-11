@@ -39,7 +39,7 @@ function draw() {
   }
   if (angle !== -1 && walking_flag == 1) {
     //歩行中であれば
-    points[angle].setRadius(points[angle].r + vector * 4);
+    points[angle].setRadius(points[angle].r + vector * 3);
     if (points[angle].r <= 0) {
       points[angle].setRadius(0);
     }
