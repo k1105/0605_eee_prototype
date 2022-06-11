@@ -1,7 +1,8 @@
 const giftwrap = (points) => {
   // giftwrap法によって二次元平面上に与えられた点群から凸包をなす頂点を選択してその頂点番号（配列のインデックス）を返す関数.
-  // pointsのうち、x最小のものを見つける. もし最小のxをとるpointが複数ある場合は、その中でもyが最小のものを選ぶ
-  index = 0;
+  // pointsのうち、y最小のものを見つける. もし最小のyをとるpointが複数ある場合は、その中でもxが最小のものを選ぶ
+  let index = 0;
+  let tmp;
   for (let i = 1; i < points.length; i++) {
     if (points[i].y > points[index].y) {
       index = i;
@@ -40,7 +41,6 @@ const giftwrap = (points) => {
 
     prev_min_delta = min_delta;
     index = tmp;
-    //console.log("min_delta: " + min_delta);
     if (index == convex_indices[0]) break;
     convex_indices.push(index);
   }
