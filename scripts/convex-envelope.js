@@ -12,6 +12,16 @@ function setup() {
   }
 }
 
+let convex_indices;
+let angle = -1;
+let hoge = 0;
+const num = 8;
+let length = 0;
+let vector = 1;
+let alpha, beta, gamma;
+let points = [];
+let pos_prev, pos_current;
+
 function draw() {
   //notify death
 
@@ -59,18 +69,6 @@ function draw() {
 }
 
 // draw関数終了
-
-let convex_indices;
-let angle = -1;
-let hoge = 0;
-const num = 8;
-let length = 0;
-let vector = 1;
-let alpha, beta, gamma;
-
-let points = [];
-
-let pos_prev, pos_current;
 
 window.addEventListener(
   "deviceorientation",
