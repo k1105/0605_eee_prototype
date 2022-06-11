@@ -13,7 +13,7 @@
 //   background(0);
 // }
 
-elem = document.getElementById("innerHTMLtxt");
+const elem = document.getElementById("innerHTMLtxt");
 let x,
   y,
   z,
@@ -23,6 +23,7 @@ let x,
   x_degree,
   y_degree,
   z_degree;
+let hoge = 0;
 
 window.addEventListener(
   "devicemotion",
@@ -48,34 +49,39 @@ window.addEventListener(
   true
 );
 
-elem.innerHTML =
-  "accelerationIncludingGravity.x: " +
-  x +
-  " <br />" +
-  "accelerationIncludingGravity.y: " +
-  y +
-  " <br />" +
-  "accelerationIncludingGravity.z: " +
-  z +
-  " <br />" +
-  "x_orientation: " +
-  x_orientation +
-  "<br />" +
-  "y_orientation: " +
-  y_orientation +
-  "<br />" +
-  "z_orientation: " +
-  z_orientation +
-  "<br />" +
-  "x_degree: " +
-  x_degree +
-  "<br />" +
-  "y_degree: " +
-  y_degree +
-  "<br />" +
-  "z_degree: " +
-  z_degree +
-  "<br />";
+setInterval(() => {
+  hoge++;
+  elem.innerHTML =
+    "accelerationIncludingGravity.x: " +
+    x +
+    " <br />" +
+    "accelerationIncludingGravity.y: " +
+    y +
+    " <br />" +
+    "accelerationIncludingGravity.z: " +
+    z +
+    " <br />" +
+    "x_orientation: " +
+    x_orientation +
+    "<br />" +
+    "y_orientation: " +
+    y_orientation +
+    "<br />" +
+    "z_orientation: " +
+    z_orientation +
+    "<br />" +
+    "x_degree: " +
+    x_degree +
+    "<br />" +
+    "y_degree: " +
+    y_degree +
+    "<br />" +
+    "z_degree: " +
+    z_degree +
+    "<br />" +
+    "hoge: " +
+    hoge;
+}, 10);
 
 // function setup() {
 //   //キャンバスを作成
